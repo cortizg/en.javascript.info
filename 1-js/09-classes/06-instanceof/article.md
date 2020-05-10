@@ -189,7 +189,7 @@ alert( {}.toString.call(user) ); // [object User]
 Para la mayoría de los objetos específicos del entorno, existe dicha propiedad. Aquí hay algunos ejemplos específicos del navegador:
 
 ```js run
-// ttoStringTag para el objeto y clase específicos del entorno:
+// toStringTag para el objeto y clase específicos del entorno:
 alert( window[Symbol.toStringTag]); // ventana
 alert( XMLHttpRequest.prototype[Symbol.toStringTag] ); // XMLHttpRequest
 
@@ -197,7 +197,7 @@ alert( {}.toString.call(window) ); // [object Window]
 alert( {}.toString.call(new XMLHttpRequest()) ); // [object XMLHttpRequest]
 ```
 
-Como puedes ver, el resultado es exactamente `Symbol.toStringTag` (si existe), envuelto en `[objetc ...]`.
+Como puedes ver, el resultado es exactamente `Symbol.toStringTag` (si existe), envuelto en `[object ...]`.
 
 Al final tenemos "typeof con esteroides" que no solo funciona para tipos de datos primitivos, sino también para objetos incorporados e incluso puede personalizarse.
 
