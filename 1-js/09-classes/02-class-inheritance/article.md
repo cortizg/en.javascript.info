@@ -1,7 +1,7 @@
 
 # Herencia de clase
 
-La herencia de clase es un método para que una clase extienda a otra clase.
+La herencia de clase es un método para que una clase extienda a otra.
 
 Entonces podemos crear una nueva funcionalidad además de la existente.
 
@@ -64,7 +64,7 @@ Internamente, la palabra clave `extends` funciona con la buena mecánica de prot
 Por ejemplo, para encontrar el método `rabbit.run`, el motor verifica (de abajo hacia arriba en la imagen) que:
 1. El objeto `rabbit` (no tiene el método `run`).
 2. Su prototipo, que es `Rabbit.prototype` (tiene el método `hide`, pero no el método `run`).
-3. Su prototipo, es decir (debido a `extends`) `Animal.prototype`, este finalmente tiene el método `run`.
+3. Su prototipo,  `Animal.prototype` (debido a `extends`), este finalmente tiene el método `run`.
 
 Como podemos recordar del capítulo <info:native-prototypes>, JavaScript usa la misma herencia prototípica para los objetos incorporados. P.ej. `Date.prototype.[[Prototype]]` es `Object.prototype`, por lo que "Date" tiene métodos de objeto genéricos.
 
@@ -86,7 +86,7 @@ class User extends f("Hola") {}
 
 new User().sayHi(); // Hola
 ```
-Aquí `class User` hereda del resultado de `f("Hola")`.
+Observa: `class User` hereda del resultado de `f("Hola")`.
 
 Eso puede ser útil para patrones de programación avanzados cuando usamos funciones para generar clases dependiendo de muchas condiciones y podamos heredar de ellas.
 ````
@@ -101,7 +101,7 @@ Si especificamos nuestro propio método `stop()` en `Rabbit`, se utilizará en s
 class Rabbit extends Animal {
   stop() {
     // ...esto se usará para rabbit.stop()
-    // en lugar de stop () de la clase Animal
+    // en lugar de stop() de la clase Animal
   }
 }
 ```
@@ -110,8 +110,8 @@ class Rabbit extends Animal {
 
 Las clases proporcionan la palabra clave `"super"` para eso.
 
-- `super.method(...)` llamar a un método padre.
-- `super(...)` llamar a un constructor padre (solo dentro de nuestro constructor).
+- `super.method(...)` llama un método padre.
+- `super(...)` llama un constructor padre (solo dentro de nuestro constructor).
 
 Por ejemplo, dejemos que nuestro conejo se oculte automáticamente cuando se detenga:
 
@@ -163,12 +163,12 @@ Si se accede, se toma de la función externa. Por ejemplo:
 ```js
 class Rabbit extends Animal {
   stop() {
-    setTimeout(() => super.stop(), 1000); // llama al padre stop despues de 1seg
+    setTimeout(() => super.stop(), 1000); // llama al stop() padre despues de 1seg
   }
 }
 ```
 
-El método `super` en la función de flecha es el mismo que en `stop()`, por lo que funciona según lo previsto. Si especificamos una función "regular" aquí, habría un error:
+El método `super` en la función de flecha es el mismo que en `stop()`, y funciona según lo previsto. Si aquí especificamos una función "regular", habría un error:
 
 ```js
 // super inesperado
@@ -183,7 +183,7 @@ Con los constructores se pone un poco complicado.
 
 Hasta ahora, `Rabbit` no tenía su propio `constructor`.
 
-De acuerdo con la [especificación] (https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), si una clase extiende otra clase y no tiene `constructor`, se genera el siguiente `constructor` "vacío":
+De acuerdo con la [especificación](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), si una clase extiende otra clase y no tiene `constructor`, se genera el siguiente `constructor` "vacío":
 
 ```js
 class Rabbit extends Animal {
@@ -228,7 +228,7 @@ let rabbit = new Rabbit("Conejo Blanco", 10); // Error: esto no está definido.
 */!*
 ```
 
-Whoops! Tenemos un error. Ahora no podemos crear conejos. ¿Qué salió mal?
+Vaya! Tenemos un error. Ahora no podemos crear conejos. ¿Qué salió mal?
 
 La respuesta corta es: los constructores en las clases heredadas deben llamar a `super(...)`, y (!) Hacerlo antes de usar `this`.
 
@@ -287,7 +287,7 @@ Si está leyendo el tutorial por primera vez, esta sección puede omitirse.
 Esta sección trata de los mecanismos internos detrás de la herencia y el método `super`.
 ```
 
-Vamos a profundizar un poco más bajo la sombra de `super`. Veremos algunas cosas interesantes en el camino.
+Vamos a profundizar un poco más el tema de `super`. Veremos algunas cosas interesantes en el camino.
 
 En primer lugar, de todo lo que hemos aprendido hasta ahora, ¡es imposible que `super` funcione en absoluto!
 
@@ -295,11 +295,11 @@ Sí, de hecho, preguntémonos, ¿cómo debería funcionar técnicamente? Cuando 
 
 La tarea puede parecer simple, pero no lo es. El motor conoce el objeto actual `this`, por lo que podría obtener el `method`  padre como `this.__proto __.method`. Desafortunadamente, una solución tan "ingenua" no funcionará.
 
-Demostremos el problema. Sin clases, usando objetos simples en aras de la simplicidad.
+Demostremos el problema. Sin clases, usando objetos puros por simplicidad.
 
 Puedes omitir esta parte e ir a la subsección `[[HomeObject]]` si no deseas conocer los detalles. Eso no hará daño. O sigue leyendo si estás interesado en comprender las cosas en profundidad.
 
-En el siguiente ejemplo, `rabbit.__ proto__ = animal`. Ahora intentemos: en `rabbit.eat()` llamaremos a `animal.eat()`, usando `this.__ proto__`:
+En el siguiente ejemplo, se hace la asignación `rabbit.__ proto__ = animal`. Ahora intentemos: en `rabbit.eat()` llamaremos a `animal.eat()`, usando `this.__proto__`:
 
 ```js run
 let animal = {
@@ -311,7 +311,7 @@ let animal = {
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Conejo",
   eat() {
 *!*
     // así es como supuestamente podría funcionar super.eat()
@@ -320,12 +320,12 @@ let rabbit = {
   }
 };
 
-rabbit.eat(); // Rabbit come.
+rabbit.eat(); // Conejo come.
 ```
 
 En la línea `(*)` tomamos `eat` del prototipo (`animal`) y lo llamamos en el contexto del objeto actual. Tenga en cuenta que `.call(this)` es importante aquí, porque un simple `this.__ proto __.eat()` ejecutaría al padre `eat` en el contexto del prototipo, no del objeto actual.
 
-Y en el código anterior, en realidad funciona según lo previsto: tenemos el `alert` correcto.
+Y en el código anterior, funciona según lo previsto: tenemos el `alert` correcto.
 
 Ahora agreguemos un objeto más a la cadena. Veremos cómo se rompen las cosas:
 
@@ -340,7 +340,7 @@ let animal = {
 let rabbit = {
   __proto__: animal,
   eat() {
-    // ...rebota alrededor al estilo de conejo y llama al método padre (animal)
+    // ...rebota al estilo de conejo y llama al método padre (animal)
     this.__proto__.eat.call(this); // (*)
   }
 };
@@ -360,9 +360,9 @@ longEar.eat(); // Error: Se excedió el número máximo de llamadas a la pila
 
 ¡El código ya no funciona! Podemos ver el error al intentar llamar a `longEar.eat()`.
 
-Puede que no sea tan obvio, pero si rastreamos la llamada `longEar.eat()`, entonces podemos ver por qué. En ambas líneas `(*)` y `(**)` el valor de `this` es el objeto actual (`longEar`). Eso es esencial: todos los métodos de objeto obtienen el objeto actual como `this`, no un prototipo o algo así.
+Puede que no sea tan obvio, pero si depuramos la llamada `longEar.eat()`, podremos ver por qué. En ambas líneas `(*)` y `(**)` el valor de `this` es el objeto actual (`longEar`). Eso es esencial: todos los métodos de objeto obtienen el objeto actual como `this`, no un prototipo o algo así.
 
-Entonces, en ambas líneas `(*)` y `(**)` el valor de `this.__ proto__` es exactamente el mismo: `rabbit`. Ambos llaman a  `rabbit.eat` sin subir la cadena en el bucle sin fin.
+Entonces, en ambas líneas `(*)` y `(**)` el valor de `this.__proto__` es exactamente el mismo: `rabbit`. Ambos llaman a  `rabbit.eat` sin subir la cadena en el bucle sin fin.
 
 Aquí está la imagen de lo que sucede:
 
@@ -377,7 +377,7 @@ Aquí está la imagen de lo que sucede:
     // es decir
     rabbit.eat.call(this);
     ```
-2. Luego, en la línea `(*)` de `rabbit.eat`, nos gustaría pasar la llamada aún más arriba en la cadena, pero `this=longEar`, entonces `this.__ proto __.eat` es nuevamente `rabbit.eat`!
+2. Luego, en la línea `(*)` de `rabbit.eat`, nos gustaría pasar la llamada aún más arriba en la cadena, evitando `this=longEar`, entonces `this.__ proto__.eat` es nuevamente `rabbit.eat`!
 
     ```js
     // dentro de rabbit.eat () también tenemos this = longEar
@@ -394,7 +394,7 @@ El problema no se puede resolver usando solo `this`.
 
 ### `[[HomeObject]]`
 
-Para proporcionar la solución, JavaScript agrega una propiedad interna especial más para las funciones: `[[HomeObject]]`.
+Para proporcionar la solución, JavaScript agrega una propiedad interna especial para las funciones: `[[HomeObject]]`.
 
 Cuando una función se especifica como un método de clase u objeto, su propiedad `[[HomeObject]]` se convierte en ese objeto.
 
@@ -412,7 +412,7 @@ let animal = {
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Conejo",
   eat() {         // rabbit.eat.[[HomeObject]] == rabbit
     super.eat();
   }
@@ -436,13 +436,13 @@ Funciona según lo previsto, debido a la mecánica de `[[HomeObject]]`. Un méto
 
 ### Los métodos no son "libres"
 
-Como hemos sabido antes, generalmente las funciones son "libres", no vinculadas a objetos en JavaScript. Para que puedan copiarse entre objetos y llamarse con otro 'this`.
+Como hemos sabido antes, generalmente las funciones son "libres", es decir no están vinculadas a objetos en JavaScript. Para que puedan copiarse entre objetos y llamarse con otro 'this`.
 
 La existencia misma de `[[HomeObject]]` viola ese principio, porque los métodos recuerdan sus objetos. `[[HomeObject]]` no se puede cambiar, por lo que este vínculo es para siempre.
 
 El único lugar en el lenguaje donde se usa `[[HomeObject]]` es en `super`. Si un método no usa `super`, entonces todavía podemos considerarlo "libre" y copiarlo entre objetos. Pero con `super` las cosas pueden salir mal.
 
-Aquí está la demostración de un resultado `super` incorrecto después de copiar:
+Aquí está la demostración de un resultado incorrecto de `super` después de copiarlo:
 
 ```js run
 let animal = {
@@ -451,7 +451,7 @@ let animal = {
   }
 };
 
-// conejo hereda de animal
+// rabbit hereda de animal
 let rabbit = {
   __proto__: animal,
   sayHi() {
@@ -465,7 +465,7 @@ let plant = {
   }
 };
 
-// arbol hereda de planta
+// tree hereda de plant
 let tree = {
   __proto__: plant,
 *!*
@@ -483,7 +483,7 @@ Una llamada a `tree.sayHi()` muestra "Soy un animal". Definitivamente mal.
 La razón es simple:
 - En la línea `(*)`, el método `tree.sayHi` se copió de `rabbit`. ¿Quizás solo queríamos evitar la duplicación de código?
 - Su `[[HomeObject]]` es `rabbit`, ya que fue creado en `rabbit`. No hay forma de cambiar `[[HomeObject]]`.
-- El código de `tree.sayHi()` tiene dentro a `super.sayHi()`. Sube de 'rabbit' y toma el método de 'animal'.
+- El código de `tree.sayHi()` tiene dentro a `super.sayHi()`. Sube desde 'rabbit' y toma el método de 'animal'.
 
 Aquí está el diagrama de lo que sucede:
 
@@ -495,11 +495,11 @@ Aquí está el diagrama de lo que sucede:
 
 La diferencia puede no ser esencial para nosotros, pero es importante para JavaScript.
 
-En el siguiente ejemplo, se utiliza una sintaxis que no es de método para la comparación. La propiedad `[[HomeObject]]` no está establecida y la herencia no funciona:
+En el siguiente ejemplo, se utiliza una sintaxis sin método para la comparación. La propiedad `[[HomeObject]]` no está establecida y la herencia no funciona:
 
 ```js run
 let animal = {
-  eat: function() { // escribiendo intencionalmente así en lugar de eat() {...
+  eat: function() { // escrito así intencionalmente en lugar de eat() {...
     // ...
   }
 };
@@ -524,9 +524,9 @@ rabbit.eat();  // Error al llamar a super (porque no hay [[HomeObject]])
      - Debemos llamar al constructor padre como `super()` en el constructor `Child` antes de usar `this`.
 3. Al anular otro método:
      - Podemos usar `super.method()` en un método `Child` para llamar al método `Parent`.
-4. Partes internas:
+4. Características internas:
      - Los métodos recuerdan su clase/objeto en la propiedad interna `[[HomeObject]]`. Así es como `super` resuelve los métodos padres.
      - Por lo tanto, no es seguro copiar un método con `super` de un objeto a otro.
 
 También:
-- Las funciones de flecha no tienen su propio `this` o` super`, por lo que se ajustan de manera transparente al contexto circundante.
+- Las funciones de flecha no tienen su propio `this` o `super`, por lo que se ajustan de manera transparente al contexto circundante.

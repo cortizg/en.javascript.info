@@ -1,23 +1,23 @@
-# Word boundary: \b
+# Límite de palabra: \b
 
-A word boundary `pattern:\b` is a test, just like `pattern:^` and `pattern:$`.
+Un límite de palabra `pattern:\b` es una prueba, al igual que `pattern:^` y `pattter:$`.
 
-When the regexp engine (program module that implements searching for regexps) comes across `pattern:\b`, it checks that the position in the string is a word boundary.
+Cuando el motor regexp (módulo de programa que implementa la búsqueda de expresiones regulares) se encuentra con `pattern:\b`, comprueba que la posición en la cadena es un límite de palabra.
 
-There are three different positions that qualify as word boundaries:
+Hay tres posiciones diferentes que califican como límites de palabras:
 
-- At string start, if the first string character is a word character `pattern:\w`.
-- Between two characters in the string, where one is a word character `pattern:\w` and the other is not.
-- At string end, if the last string character is a word character `pattern:\w`.
+- Al comienzo de la cadena, si el primer carácter de cadena es un carácter de palabra `pattern:\w`.
+- Entre dos caracteres en la cadena, donde uno es un carácter de palabra `pattern:\w` y el otro no.
+- Al final de la cadena, si el último carácter de la cadena es un carácter de palabra `pattern:\w`.
 
-For instance, regexp `pattern:\bJava\b` will be found in `subject:Hello, Java!`, where `subject:Java` is a standalone word, but not in `subject:Hello, JavaScript!`.
+Por ejemplo, la expresión regular `pattern:\bJava\b` se encontrará en `subject:Hello, Java!`, Donde `subject:Java` es una palabra independiente, pero no en `subject:Hello, JavaScript!`.
 
 ```js run
-alert( "Hello, Java!".match(/\bJava\b/) ); // Java
-alert( "Hello, JavaScript!".match(/\bJava\b/) ); // null
+alert( "Hola, Java!".match(/\bJava\b/) ); // Java
+alert( "Hola, JavaScript!".match(/\bJava\b/) ); // null
 ```
 
-In the string `subject:Hello, Java!` following positions correspond to `pattern:\b`:
+En la cadena `subject:Hola, Java!` las siguientes posiciones corresponden a `pattern:\b`:
 
 ![](hello-java-boundaries.svg)
 
@@ -27,7 +27,7 @@ So, it matches the pattern `pattern:\bHello\b`, because:
 2. Then matches the word `pattern:Hello`.
 3. Then the test `pattern:\b` matches again, as we're between `subject:o` and a space.
 
-The pattern `pattern:\bJava\b` would also match. But not `pattern:\bHell\b` (because there's no word boundary after `l`) and not `Java!\b` (because the exclamation sign is not a wordly character `pattern:\w`, so there's no word boundary after it).
+The pattern `pattern:\bHello\b` would also match. But not `pattern:\bHell\b` (because there's no word boundary after `l`) and not `Java!\b` (because the exclamation sign is not a wordly character `pattern:\w`, so there's no word boundary after it).
 
 ```js run
 alert( "Hello, Java!".match(/\bHello\b/) ); // Hello

@@ -12,7 +12,7 @@ Compara los dos fragmentos de código.
     try {
       trabajo trabajo
     } catch (e) {
-      captura errores
+      maneja errores
     } finally {
     *!*
       limpiar el espacio de trabajo
@@ -25,7 +25,7 @@ Compara los dos fragmentos de código.
     try {
       trabajo trabajo
     } catch (e) {
-      captura de errores
+      manejo de errores
     }
 
     *!*

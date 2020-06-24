@@ -2,7 +2,7 @@ La diferencia se hace evidente cuando miramos el código dentro de una función.
 
 El comportamiento es diferente si hay un "salto fuera" de `try..catch`.
 
-Por ejemplo, cuando hay un `return` dentro de `try..catch`. La cláusula `finally` funciona en el caso de que *cualquiera* salga de `try..catch`, incluso a través de la declaración `return`: justo después de que `try..catch` haya terminado, pero antes de que el código de llamada obtenga el control.
+Por ejemplo, cuando hay un `return` en el interior de `try..catch`. La cláusula `finally` funciona en el caso de *cualquier* salida de  `try..catch`, incluso a través de la declaración `return`: justo después de que `try..catch` haya terminado, pero antes de que el código de llamada obtenga el control.
 
 ```js run
 function f() {
@@ -21,7 +21,7 @@ function f() {
 f(); // limpieza!
 ```
 
-... O cuando hay un "lanzamiento", como aquí:
+... O cuando hay un `throw` (lanzamiento de excepción), como aquí:
 
 ```js run
 function f() {

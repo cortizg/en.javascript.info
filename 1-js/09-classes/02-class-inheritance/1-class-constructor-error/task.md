@@ -4,7 +4,7 @@ importance: 5
 
 # Error al crear una instancia
 
-Aquí está el código de la clase `Rabbit` que extiende a`Animal`.
+Aquí está el código de la clase `Rabbit` que extiende a `Animal`.
 
 Desafortunadamente, los objetos `Rabbit` no se pueden crear. ¿Que pasa? Arréglalo.
 ```js run
