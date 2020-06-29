@@ -18,7 +18,7 @@ La sintaxis del constructor para un objeto promesa es:
 
 ```js
 let promise = new Promise(function(resolve, reject) {
-  // Ejecutor(el código productor, "cantante")
+  // Ejecutor (el código productor, "cantante")
 });
 ```
 
@@ -109,7 +109,7 @@ En caso de que algo salga mal, el ejecutor debe llamar a 'reject'. Eso se puede 
 ```
 
 ````smart header="Inmediatamente llamando a `resolve`/`reject`"
-En la práctica, un ejecutor generalmente hace algo de forma asíncrona y llama a `resolv`/`reject` después de un tiempo, pero no tiene que hacerlo. También podemos llamar a `resolve` o `reject` inmediatamente, así:
+En la práctica, un ejecutor generalmente hace algo de forma asíncrona y llama a `resolve`/`reject` después de un tiempo, pero no tiene que hacerlo. También podemos llamar a `resolve` o `reject` inmediatamente, así:
 
 ```js
 let promise = new Promise(function(resolve, reject) {

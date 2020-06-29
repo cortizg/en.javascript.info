@@ -63,7 +63,7 @@ try {
 
 Tenga en cuenta: en la línea `(1)` llamamos al constructor padre. JavaScript requiere que llamemos `super` en el constructor hijo, por lo que es obligatorio. El constructor padre establece la propiedad `message`.
 
-El constructor principal también establece la propiedad `name` en `"Error" `, por lo que en la línea `(2)` la restablecemos al valor correcto.
+El constructor principal también establece la propiedad `name` en `"Error"`, por lo que en la línea `(2)` la restablecemos al valor correcto.
 
 Intentemos usarlo en `readUser(json)`:
 
@@ -211,7 +211,7 @@ alert( new PropertyRequiredError("campo").name ); // PropertyRequiredError
 
 Ahora los errores personalizados son mucho más cortos, especialmente `ValidationError`, ya que eliminamos la línea `"this.name = ..."` en el constructor.
 
-## Excepciones de ajuste
+## Empacado de Excepciones
 
 El propósito de la función `readUser` en el código anterior es "leer los datos del usuario". Puede haber diferentes tipos de errores en el proceso. En este momento tenemos `SyntaxError` y `ValidationError`, pero en el futuro la función `readUser` puede crecer y probablemente generar otros tipos de errores.
 
@@ -241,7 +241,7 @@ Si la función `readUser` genera varios tipos de errores, entonces debemos pregu
 
 A menudo, la respuesta es "No": nos gustaría estar "un nivel por encima de todo eso". Solo queremos saber si hubo un "error de lectura de datos": el por qué ocurrió exactamente es a menudo irrelevante (el mensaje de error lo describe). O, mejor aún, nos gustaría tener una forma de obtener los detalles del error, pero solo si es necesario.
 
-La técnica que describimos aquí se llama "excepciones de ajuste".
+La técnica que describimos aquí se llama "empacado de excepciones".
 
 1. Crearemos una nueva clase `ReadError` para representar un error genérico de "lectura de datos".
 2. La función `readUser` detectará los errores de lectura de datos que ocurren dentro de ella, como `ValidationError` y `SyntaxError`, y generará un `ReadError` en su lugar.
@@ -321,10 +321,10 @@ En el código anterior, `readUser` funciona exactamente como se describe: detect
 
 Entonces, el código externo verifica `instanceof ReadError` y eso es todo. No es necesario enumerar todos los tipos de error posibles.
 
-El enfoque se llama "excepciones de ajuste", porque tomamos excepciones de "bajo nivel" y las "ajustamos" en `ReadError` que es más abstracto. Es ampliamente utilizado en la programación orientada a objetos.
+El enfoque se llama "empacado de excepciones", porque tomamos excepciones de "bajo nivel" y las "ajustamos" en `ReadError` que es más abstracto. Es ampliamente utilizado en la programación orientada a objetos.
 
 ## Resumen
 
 - Podemos heredar de `Error` y otras clases de error incorporadas normalmente. Solo necesitamos cuidar la propiedad `name` y no olvidemos llamar `super`.
 - Podemos usar `instanceof` para verificar errores particulares. También funciona con herencia. Pero a veces tenemos un objeto error que proviene de una biblioteca de terceros y no hay una manera fácil de obtener su clase. Entonces la propiedad `name` puede usarse para tales controles.
-- Excepciones de Ajustes es una técnica generalizada: una función maneja excepciones de bajo nivel y crea errores de alto nivel en lugar de varios errores de bajo nivel. Las excepciones de bajo nivel a veces se convierten en propiedades de ese objeto como `err.cause` en los ejemplos anteriores, pero eso no es estrictamente necesario.
+- Empacado de excepciones es una técnica generalizada: una función maneja excepciones de bajo nivel y crea errores de alto nivel en lugar de varios errores de bajo nivel. Las excepciones de bajo nivel a veces se convierten en propiedades de ese objeto como `err.cause` en los ejemplos anteriores, pero eso no es estrictamente necesario.

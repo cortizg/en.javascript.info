@@ -1,56 +1,56 @@
-# Sets and ranges [...]
+# Conjuntos y rangos [...]
 
-Several characters or character classes inside square brackets `[…]` mean to "search for any character among given".
+Varios caracteres o clases de caracteres entre corchetes `[…]` significa "buscar cualquier carácter entre los dados".
 
-## Sets
+## Conjuntos
 
-For instance, `pattern:[eao]` means any of the 3 characters: `'a'`, `'e'`, or `'o'`.
+Por ejemplo, `pattern:[eao]` significa cualquiera de los 3 caracteres: `'a'`, `'e'`, or `'o'`.
 
-That's called a *set*. Sets can be used in a regexp along with regular characters:
+A esto se le dice *conjunto*. Los conjuntos se pueden usar en una expresión regular junto con los caracteres normales:
 
 ```js run
-// find [t or m], and then "op"
+// encontrar [t ó m], y luego "op"
 alert( "Mop top".match(/[tm]op/gi) ); // "Mop", "top"
 ```
 
-Please note that although there are multiple characters in the set, they correspond to exactly one character in the match.
+Tenga en cuenta que aunque hay varios caracteres en el conjunto, corresponden exactamente a un carácter en la coincidencia.
 
-So the example below gives no matches:
+Entonces, el siguiente ejemplo no da coincidencias:
 
 ```js run
-// find "V", then [o or i], then "la"
-alert( "Voila".match(/V[oi]la/) ); // null, no matches
+// encuentra "V", luego [o ó i], luego "la"
+alert( "Voila".match(/V[oi]la/) ); // null, sin coincidencias
 ```
 
-The pattern searches for:
+El patrón busca:
 
 - `pattern:V`,
-- then *one* of the letters `pattern:[oi]`,
-- then `pattern:la`.
+- después *una* de las letras `pattern:[oi]`,
+- después `pattern:la`.
 
-So there would be a match for `match:Vola` or `match:Vila`.
+Entonces habría una coincidencia para `match:Vola` o `match:Vila`.
 
-## Ranges
+## Rangos
 
-Square brackets may also contain *character ranges*.
+Los corchetes también pueden contener *rangos de caracteres*.
 
-For instance, `pattern:[a-z]` is a character in range from `a` to `z`, and `pattern:[0-5]` is a digit from `0` to `5`.
+Por ejemplo, `pattern:[a-z]` es un carácter en el rango de `a` a `z`, y `pattern:[0-5]` es un dígito de `0` a `5`.
 
-In the example below we're searching for `"x"` followed by two digits or letters from `A` to `F`:
+En el ejemplo a continuación, estamos buscando `"x"` seguido de dos dígitos o letras de `A` a `F`:
 
 ```js run
-alert( "Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g) ); // xAF
+alert( "Excepción 0xAF".match(/x[0-9A-F][0-9A-F]/g) ); // xAF
 ```
 
-Here `pattern:[0-9A-F]` has two ranges: it searches for a character that is either a digit from `0` to `9` or a letter from `A` to `F`.
+Aquí `pattern:[0-9A-F]` tiene dos rangos: busca un carácter que sea un dígito de `0` a `9` o una letra de `A` a `F`.
 
-If we'd like to look for lowercase letters as well, we can add the range `a-f`: `pattern:[0-9A-Fa-f]`. Or add the flag `pattern:i`.
+Si también queremos buscar letras minúsculas, podemos agregar el rango `a-f`: `pattern:[0-9A-Fa-f]`. O agrega la bandera `pattern:i`.
 
-We can also use character classes inside `[…]`.
+También podemos usar clases de caracteres dentro de los `[…]`.
 
-For instance, if we'd like to look for a wordly character `pattern:\w` or a hyphen `pattern:-`, then the set is `pattern:[\w-]`.
+Por ejemplo, si quisiéramos buscar un carácter de palabra `pattern:\w` o un guión `pattern:-`, entonces el conjunto es `pattern:[\w-]`.
 
-Combining multiple classes is also possible, e.g. `pattern:[\s\d]` means "a space character or a digit".
+También es posible combinar varias clases, p.ej.: `pattern:[\s\d]` significa "un carácter de espacio o un dígito".
 
 ```smart header="Character classes are shorthands for certain character sets"
 For instance:
