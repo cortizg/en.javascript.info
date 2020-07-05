@@ -13,7 +13,7 @@ let obj = {};
 alert( obj ); // "[object Object]" ?
 ```
 
-¿Dónde está el código que genera la cadena `"[objeto Objeto]"`? Ese es un método integrado `toString`, pero ¿dónde está? ¡El `obj` está vacío!
+¿Dónde está el código que genera la cadena `"[objetc Objetc]"`? Ese es un método integrado `toString`, pero ¿dónde está? ¡El `obj` está vacío!
 
 ...Pero la notación corta `obj = {}` es la misma que `obj = new Object()`, donde `Object` es una función de constructor de objeto integrado, con su propio `prototype` que hace referencia a un objeto enorme con `toString` y otros métodos
 
@@ -122,6 +122,7 @@ String.prototype.show = function() {
 Durante el proceso de desarrollo, podemos tener ideas para nuevos métodos integrados que nos gustaría tener, y podemos sentir la tentación de agregarlos a los prototipos nativos. Pero eso es generalmente una mala idea.
 
 ```warn
+
 Los prototipos son globales, por lo que es fácil generar un conflicto. Si dos bibliotecas agregan un método `String.prototype.show`, entonces una de ellas sobrescribirá el método de la otra.
 
 Por lo tanto, en general, modificar un prototipo nativo se considera una mala idea.
@@ -144,7 +145,7 @@ if (!String.prototype.repeat) { // si no hay tal método
 
     // en realidad, el código debería ser un poco más complejo que eso
     // (el algoritmo completo está en la especificación)
-    // pero incluso un polirelleno imperfecto a menudo se considera lo suficientemente bueno
+    // pero incluso un polyfill (polirelleno) imperfecto a menudo se considera lo suficientemente bueno
     return new Array(n + 1).join(this);
   };
 }

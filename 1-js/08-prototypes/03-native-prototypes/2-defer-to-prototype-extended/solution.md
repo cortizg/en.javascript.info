@@ -8,12 +8,12 @@ Function.prototype.defer = function(ms) {
   }
 };
 
-// revisalo
+// revísalo
 function f(a, b) {
   alert( a + b );
 }
 
-f.defer(1000)(1, 2); // muestra 3 despues de 1 seg
+f.defer(1000)(1, 2); // muestra 3 después de 1 seg
 ```
 
 Tenga en cuenta: utilizamos `this` en `f.apply` para que nuestro decorado funcione para los métodos de objetos.

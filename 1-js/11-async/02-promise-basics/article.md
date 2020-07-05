@@ -259,7 +259,7 @@ Sin embargo, no es exactamente un alias de `then(f, f)`. Hay varias diferencias 
 
     Eso es muy conveniente, porque 'finally' no está destinado a procesar un resultado prometedor. Entonces lo pasa.
 
-    Hablaremos más sobre el encadenamiento de promesas y la transmisión de resultados entre los controladores en el próximo capítulo.
+    Hablaremos más sobre el encadenamiento de promesas y la transmisión de resultados entre los manejadores en el próximo capítulo.
 
 3. Por último, pero no menos importante, `.finally(f)` es una sintaxis más conveniente que `.then(f, f)`: no es necesario duplicar la función `f`.
 
@@ -273,9 +273,9 @@ let promise = new Promise(resolve => resolve("hecho!"));
 promise.then(alert); // ¡hecho! (aparece ahora)
 ```
 
-Tenga en cuenta que esto es diferente y más poderoso que el escenario de la "lista de suscripción" de la vida real. Si el cantante ya lanzó su canción y luego una persona se registra en la lista de suscripción, probablemente no recibirá esa canción. Las suscripciones en la vida real deben hacerse antes del evento.
+Ten en cuenta que esto es diferente y más poderoso que el escenario de la "lista de suscripción" de la vida real. Si el cantante ya lanzó su canción y luego una persona se registra en la lista de suscripción, probablemente no recibirá esa canción. Las suscripciones en la vida real deben hacerse antes del evento.
 
-Las promesas son más flexibles. Podemos agregar controladores en cualquier momento: si el resultado ya está allí, nuestros controladores lo obtienen de inmediato.
+Las promesas son más flexibles. Podemos agregar manejadores en cualquier momento: si el resultado ya está allí, nuestros manejadores lo obtienen de inmediato.
 ````
 
 A continuación, veamos ejemplos más prácticos de cómo las promesas pueden ayudarnos a escribir código asincrónico.

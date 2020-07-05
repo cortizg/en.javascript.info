@@ -3,7 +3,7 @@
 
 Vuelva a escribir la función `showCircle` en la solución de la tarea <info:task/animate-circle-callback> para que devuelva una promesa en lugar de aceptar un callback.
 
-El nuevo uso:
+Nueva forma de uso:
 
 ```js
 showCircle(150, 150, 100).then(div => {
